@@ -139,7 +139,7 @@ int simulation_bldc_malha_aberta(sim_args_t *args)
 		Vabc[1] = args->Vdc * sinf(theta_e + PHI_B);
 		Vabc[2] = args->Vdc * sinf(theta_e + PHI_C);
 		/* I. Atualizacao da planta (motor BLDC) */
-		bldc_step(Vabc, &motor, &time_sim, (float)args->Tl, false);
+		bldc_step(Vabc, &motor, time_sim.dt, (float)args->Tl, false);
 
 		/* J. Log dos dados */
 		fprintf(log_file,

@@ -56,7 +56,7 @@ float rpm_to_rads(float rpm)
 
 void bldc_step(float Vabc[JUST_THREE_PHASES],
                bldc_t *motor,
-               time_simulation_t *time,
+			   float dt,
                float Tl,
                bool trapezoidal_back_emf_flag)
 {
@@ -94,9 +94,9 @@ void bldc_step(float Vabc[JUST_THREE_PHASES],
     diabc[1] = (Vabc[1] - motor->R * motor->iabc[1] - motor->eabc[1]) / (motor->L + motor->M);
     diabc[2] = (Vabc[2] - motor->R * motor->iabc[2] - motor->eabc[2]) / (motor->L + motor->M);
 
-    motor->iabc[0] += diabc[0] * time->dt;
-    motor->iabc[1] += diabc[1] * time->dt;
-    motor->iabc[2] += diabc[2] * time->dt;
+    motor->iabc[0] += diabc[0] * dt;
+    motor->iabc[1] += diabc[1] * dt;
+    motor->iabc[2] += diabc[2] * dt;
 
     motor->Te = motor->Kt * (motor->iabc[0] * fabc[0] +
                              motor->iabc[1] * fabc[1] +
@@ -104,6 +104,6 @@ void bldc_step(float Vabc[JUST_THREE_PHASES],
 
     domega_r = (motor->Te - Tl - motor->omega_r * motor->B) / motor->J;
 
-    motor->omega_r += domega_r * time->dt;
-    motor->theta_r += motor->omega_r * time->dt;
+    motor->omega_r += domega_r * dt;
+    motor->theta_r += motor->omega_r * dt;
 }

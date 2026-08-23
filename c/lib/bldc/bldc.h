@@ -219,7 +219,7 @@ float rpm_to_rads(float rpm);
  */
 void bldc_step(float Vabc[JUST_THREE_PHASES],
                bldc_t *motor,
-               time_simulation_t *time,
+			   float dt,
                float Tl,
                bool trapezoidal_back_emf_flag);
 

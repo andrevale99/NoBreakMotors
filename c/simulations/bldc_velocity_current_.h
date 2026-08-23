@@ -257,7 +257,7 @@ int simulation_bldc_malha_corrente_velocidade(sim_args_t *args)
                                 (float)gate_c, Vabc);
 
         /* I. Atualizacao da planta (motor BLDC) */
-        bldc_step(Vabc, &motor, &time_sim, (float)args->Tl, false);
+        bldc_step(Vabc, &motor, time_sim.dt, (float)args->Tl, false);
 
 		progress_bar_update(&pb, t);
 

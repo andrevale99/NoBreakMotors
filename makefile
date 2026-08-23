@@ -2,7 +2,7 @@ GCC = gcc
 PYTHON=python3
 
 MAIN = c/main.c
-PLOT = graficos.py
+PLOT = auxs/graficos.py
 
 LIBS = -I./c/lib/bldc \
     -I./c/lib/inverter \
