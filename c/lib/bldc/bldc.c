@@ -71,7 +71,7 @@ void bldc_step(float Vabc[JUST_THREE_PHASES],
         motor->theta_e += TWO_PI;
     }
 
-    motor->omega_e = motor->P * motor->omega_r;
+    //motor->omega_e = motor->P * motor->omega_r;
 
     if (trapezoidal_back_emf_flag)
     {
