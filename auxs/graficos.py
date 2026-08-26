@@ -55,6 +55,9 @@ str_omegar = 'omega_r'
 str_iqref = 'iq_ref'
 str_vdref = 'vd_ref'
 str_vqref = 'vq_ref'
+str_theta_e_sintetico = "theta_e_sintetico"
+str_omega_e_cmd = "omega_e_cmd"
+str_v_amp = "v_amp"
 
 #===========================================================
 #===========================================================
@@ -74,50 +77,77 @@ _id = data[str_id]
 te = data[str_te]
 omegar = data[str_omegar]
 rpm = omegar * 60./(2*np.pi)
-iqref = data[str_iqref]
-vdref = data[str_vdref]
-vqref = data[str_vqref]
 
-#===========================================================
-# tempo x iabc,rpm,Te,iq,id
-#===========================================================
+try:
 
-plt.figure(figsize=DEFAULT_FIGSIZE)
-plt.subplot(211)
-plt.plot(time, iabc.T)
-plt.ylabel('A')
-plt.grid()
-no_xlabel
+	iqref = data[str_iqref]
+	vdref = data[str_vdref]
+	vqref = data[str_vqref]
 
-plt.subplot(212)
-plt.plot(time,rpm)
-plt.grid()
-plt.ylabel('RPM')
-plt.xlabel('s')
+	#===========================================================
+	# tempo x iabc,rpm,Te,iq,id
+	#===========================================================
 
-plt.tight_layout()
+	plt.figure(figsize=DEFAULT_FIGSIZE)
+	plt.subplot(211)
+	plt.plot(time, iabc.T)
+	plt.ylabel('A')
+	plt.grid()
+	no_xlabel
 
-plt.savefig(pasta_saida+"01_corrente-rpm-Te.pdf")
+	plt.subplot(212)
+	plt.plot(time,rpm)
+	plt.grid()
+	plt.ylabel('RPM')
+	plt.xlabel('s')
 
-#===========================================================
-# tempo x iq,id,iqref,te
-#===========================================================
+	plt.tight_layout()
 
-plt.figure(figsize=DEFAULT_FIGSIZE)
-plt.subplot(211)
-plt.plot(time, _id, label=r'$i_{d}$')
-plt.plot(time, iq, label=r'$i_{q}$')
-plt.plot(time, iqref, label=r'$i_{qref}$', ls='--')
-plt.ylabel('A')
-plt.grid()
-no_xlabel
+	plt.savefig(pasta_saida+"01_corrente-rpm.pdf")
 
-plt.subplot(212)
-plt.plot(time,te)
-plt.grid()
-plt.ylabel('Nm')
-plt.xlabel('s')
+	#===========================================================
+	# tempo x iq,id,iqref,te
+	#===========================================================
 
-plt.tight_layout()
+	plt.figure(figsize=DEFAULT_FIGSIZE)
+	plt.subplot(211)
+	plt.plot(time, _id, label=r'$i_{d}$')
+	plt.plot(time, iq, label=r'$i_{q}$')
+	plt.plot(time, iqref, label=r'$i_{qref}$', ls='--')
+	plt.ylabel('A')
+	plt.grid()
+	no_xlabel
 
-plt.savefig(pasta_saida+"02_iq-id-Te.pdf")
+	plt.subplot(212)
+	plt.plot(time,te)
+	plt.grid()
+	plt.ylabel('Nm')
+	plt.xlabel('s')
+
+	plt.tight_layout()
+
+	plt.savefig(pasta_saida+"02_iq-id-Te.pdf")
+
+except:
+	
+	#===========================================================
+	# tempo x iabc,rpm,Te,iq,id
+	#===========================================================
+
+	plt.figure(figsize=DEFAULT_FIGSIZE)
+	plt.subplot(211)
+	plt.plot(time, iabc.T)
+	plt.ylabel('A')
+	plt.grid()
+	no_xlabel
+
+	plt.subplot(212)
+	plt.plot(time,rpm)
+	plt.grid()
+	plt.ylabel('RPM')
+	plt.xlabel('s')
+
+	plt.tight_layout()
+
+	plt.savefig(pasta_saida+"01_corrente-rpm.pdf")
+
