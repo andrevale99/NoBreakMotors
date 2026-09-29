@@ -4,21 +4,21 @@ PYTHON=python3
 MAIN = c/main.c
 PLOT = auxs/graficos.py
 
-LIBS = -I./c/lib/bldc \
-    -I./c/lib/inverter \
-    -I./c/lib/PIcontroller \
-    -I./c/lib/svpwm \
-    -I./c/lib/transforms \
-    -I./c/lib/VFstartup \
-	-I./c/lib/progressbar \
+LIBS = -I./app/c/lib/bldc \
+    -I./app/c/lib/inverter \
+    -I./app/c/lib/PIcontroller \
+    -I./app/c/lib/svpwm \
+    -I./app/c/lib/transforms \
+    -I./app/c/lib/VFstartup \
+	-I./app/c/lib/progressbar \
 
 
-INCLUDE = -I./c/include
+INCLUDE = -I./app/c/include
 
 ALL_INCLUDE = $(LIBS) $(INCLUDE)
 
-OUT = c/simulation.out
-OUT_IMGS = img/
+OUT = /app/c/simulation.out
+OUT_IMGS = /app/img/
 
 GCC_FLAGS = -Wall -lm
 

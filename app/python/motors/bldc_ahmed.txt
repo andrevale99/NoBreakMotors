@@ -46,7 +46,7 @@ Ttl = 0.3           # s - tempo de injecao da nova carga
 Tlnew = 4         # N.m - Torque da nova carga
 
 # --- Barramento CC ---
-Vdc = 100               # V - tensao do barramento CC
+Vdc = 350               # V - tensao do barramento CC
 
 # --- Controladores PI ---
 KpOmega = 0.164     # ganho proporcional - malha de velocidade
@@ -63,7 +63,7 @@ rpm=1000
 # true/yes/on/1
 # false/no/off/0
 # Partida com Fonte de alimentação senoidal
-MalhaAberta = 1
+MalhaAberta = 0
 
 # --- Saida ---
 file = closedloop_simulation.csv
