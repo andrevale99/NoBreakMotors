@@ -1,3 +1,4 @@
-img/*
+img/
 *.csv
 __pycache__/
+*.pdf
