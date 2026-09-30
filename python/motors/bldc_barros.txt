@@ -1,0 +1,73 @@
+# ==========================================================
+#   Arquivo de parametros da simulacao closedloop
+#   Uso: ./closedloop -c params.txt
+#
+#   Formato: CHAVE=VALOR (tambem aceita "CHAVE VALOR")
+#   Linhas em branco ou iniciadas com '#' sao ignoradas.
+#   Prioridade: argumentos de linha de comando > este arquivo > default
+#
+# V. A. N. da R. Barros and M. R. O. A. Maximo, 
+# "BLDC Motor Control for Small Size League Robots," 
+# 2025 Brazilian Symposium on Robotics (SBR) and 2025 Workshop on Robotics in Education (WRE), 
+# Vitoria, Brazil, 2025, pp. 200-205, 
+# doi: 10.1109/SBR/WRE66973.2025.11249595. 
+# keywords: {Motor drives;PI control;Monte Carlo methods;
+# Design methodology;Force;Education;Robustness;Robots;
+# Standards;Electric motors;BLDC motor;Small Size League;
+# PI control;Feedforward control;Monte Carlo simulations},
+#
+#
+# ==========================================================
+
+# --- Parametros do motor ---
+R  = 464e-3          # Ohm  - resistencia de armadura
+L  = 322e-6       # H    - indutancia de magnetizacao
+M  = 0.0            # H    - indutancia mutua
+Ke = 25.1e-3        # V/(rad/s) - constante eletrica  
+J  = 135e-5         # kg.m^2 - momento de inercia
+B  = 135e-6         # coeficiente de amortecimento
+Tl = 0.0            # N.m  - torque de carga
+P  = 8             # numero de pares de polos
+Kt = 25.1e-3         # N.m/A - constante de torque
+
+# --- Parametros do SVPWM (chaveamento real do inversor) ---
+Fsw        = 10000   # Hz - frequencia de chaveamento
+PwmSamples = 100    # passos finos de simulacao por periodo Ts
+                    # (maior = mais fiel ao chaveamento real, porem mais lento)
+
+# --- Parametros de tempo da simulacao ---
+Ti = 0.0                 # s - tempo inicial
+Tf = 0.5                 # s - tempo final
+Dt = 1e-6                # s - passo de integracao explicito
+                         # (0.0 = automatico: dt = 1/Fsw / PwmSamples;
+                         #  informe um valor > 0 para sobrescrever o
+                         #  calculo automatico)
+                        
+# --- injecao da nova carga Tl ---
+Ttl = 0.3           # s - tempo de injecao da nova carga
+Tlnew = 0.2         # N.m - Torque da nova carga
+
+# --- Barramento CC ---
+Vdc = 18.0               # V - tensao do barramento CC
+
+# --- Controladores PI ---
+KpOmega = 33.794     # ganho proporcional - malha de velocidade
+KiOmega = 4246.682     # ganho integral - malha de velocidade
+KpId    = 1.012         # ganho proporcional - malha de corrente id
+KiId    = 1457.699         # ganho integral - malha de corrente id
+KpIq    = 1.012         # ganho proporcional - malha de corrente iq
+KiIq    = 1457.699         # ganho integral - malha de corrente iq
+
+# --- Referencia de velocidade ---
+# max rpm = 6720
+rpm=800
+
+# --- Partida em malha aberta ---
+# --- Partida em malha aberta ---
+# true/yes/on
+# false/no/off
+# Partida com Fonte de alimentação senoidal
+MalhaAberta = 0
+
+# --- Saida ---
+file = closedloop_simulation.csv
