@@ -1,24 +1,24 @@
 GCC = gcc
 PYTHON=python3
 
-MAIN = c/main.c
+MAIN = ./c/main.c
 PLOT = auxs/graficos.py
 
-LIBS = -I./app/c/lib/bldc \
-    -I./app/c/lib/inverter \
-    -I./app/c/lib/PIcontroller \
-    -I./app/c/lib/svpwm \
-    -I./app/c/lib/transforms \
-    -I./app/c/lib/VFstartup \
-	-I./app/c/lib/progressbar \
+LIBS = -I./c/lib/bldc \
+    -I./c/lib/inverter \
+    -I./c/lib/PIcontroller \
+    -I./c/lib/svpwm \
+    -I./c/lib/transforms \
+    -I./c/lib/VFstartup \
+	-I./c/lib/progressbar \
 
 
-INCLUDE = -I./app/c/include
+INCLUDE = -I./c/include
 
 ALL_INCLUDE = $(LIBS) $(INCLUDE)
 
-OUT = /app/c/simulation.out
-OUT_IMGS = /app/img/
+OUT = ./c/simulation.out
+OUT_IMGS = ./img/
 
 GCC_FLAGS = -Wall -lm
 
