@@ -23,7 +23,7 @@
 # --- Parametros do motor ---
 R  = 2.9              # Ohm       - resistencia de armadura
 L  = 0.0202           # H         - indutancia de magnetizacao
-M  = 0.0              # H         - indutancia mutua (nao usada em bldc_step)
+M  = 0.0              # H         - indutancia mutua
 Ke = 1.1       # V/(rad/s) - constante eletrica (FCEM)
 J  = 1.0e-3           # kg.m^2    - momento de inercia do rotor
 B  = 5e-4             # N.m/(rad/s) - coeficiente de atrito viscoso
