@@ -51,6 +51,7 @@ def simulation_bldc_malha_corrente_velocidade(args):
     id_ref = 0.0
 
     omega_ref = rpm_to_rads(args.rpm)
+    print(f"rpm_ref = {args.rpm:.2f} RPM")
     print(f"omega_ref = {omega_ref:.6f} rad/s")
 
     pi_omega = pi_controller_init(args.KpOmega, args.KiOmega, dtOmega, True, PI_IQ_MIN, True, PI_IQ_MAX)
@@ -111,7 +112,7 @@ def simulation_bldc_malha_corrente_velocidade(args):
 
         Vabc = inverter_output_voltage(inverter, gate_a, gate_b, gate_c)
 
-        bldc_step(Vabc, motor, time_sim, args.Tl, False)
+        bldc_step(Vabc, motor, time_sim, args.Tl, True)
 
         progress_bar_update(pb, t)
 
