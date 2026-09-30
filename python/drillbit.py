@@ -2,6 +2,7 @@ import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
+<<<<<<< HEAD
 def cnc_drilling_coupled_2dof(t, y, params):
     """
     Sistema de EDOs para o modelo acoplado de 2 Graus de Liberdade (Axial-Torsional)
@@ -90,4 +91,74 @@ plt.grid(True)
 plt.legend()
 
 plt.tight_layout()
+=======
+def drill_string_open_loop(t, y, params):
+    """
+    Define o sistema de equações diferenciais de malha aberta para a coluna de perfuração.
+    y = [varphi_r, omega_r, varphi_b, omega_b]
+    onde:
+    - varphi_r: Ângulo no topo
+    - omega_r: Velocidade angular no topo
+    - varphi_b: Ângulo na broca (bottom)
+    - omega_b: Velocidade angular na broca
+    """
+    Ir = params['Ir']
+    Ib = params['Ib']
+    C = params['C']
+    K = params['K']
+    cr = params['cr']
+    cb = params['cb']
+    
+    varphi_r, omega_r, varphi_b, omega_b = y
+    
+    # Entrada de torque no topo (Tm) - Exemplo: degrau de torque em t = 1s
+    Tm = params['Tm_func'](t)
+    
+    # Torques resistivos (atrito viscoso/estrutural no topo e na broca)
+    Tr = cr * omega_r
+    Tb = cb * omega_b
+    
+    # Equações de movimento (Dinâmica Torsional)
+    # Ir * omega_dot_r + C*(omega_r - omega_b) + K*(varphi_r - varphi_b) = Tm - Tr
+    d_varphi_r = omega_r
+    d_omega_r = (Tm - Tr - C * (omega_r - omega_b) - K * (varphi_r - varphi_b)) / Ir
+    
+    # Ib * omega_dot_b - C*(omega_r - omega_b) - K*(varphi_r - varphi_b) = -Tb
+    d_varphi_b = omega_b
+    d_omega_b = (C * (omega_r - omega_b) + K * (varphi_r - varphi_b) - Tb) / Ib
+    
+    return [d_varphi_r, d_omega_r, d_varphi_b, d_omega_b]
+
+# Parâmetros do sistema baseados na literatura de modelagem torsional[cite: 2]
+params = {
+    'Ir': 120.0,       # Momento de inércia no topo (kg.m^2)
+    'Ib': 80.0,        # Momento de inércia na broca/BHA (kg.m^2)
+    'C': 15.0,         # Amortecimento torsional da coluna (N.m.s/rad)
+    'K': 800.0,        # Rigidez torsional da coluna (N.m/rad)
+    'cr': 2.0,         # Coeficiente de atrito no topo
+    'cb': 5.0,         # Coeficiente de atrito na broca
+    'Tm_func': lambda t: 2000.0 if t >= 1.0 else 0.0  # Torque de entrada (Tm)
+}
+
+# Condições iniciais [pos_topo, vel_topo, pos_broca, vel_broca]
+y0 = [0.0, 0.0, 0.0, 0.0]
+
+# Intervalo de tempo da simulação
+t_span = (0.0, 30.0)
+t_eval = np.linspace(t_span[0], t_span[1], 1500)
+
+# Resolução numérica do sistema de EDOs
+sol = solve_ivp(drill_string_open_loop, t_span, y0, args=(params,), t_eval=t_eval, method='RK45')
+
+# Plotagem dos resultados da resposta em malha aberta
+plt.figure(figsize=(10, 6))
+plt.plot(sol.t, sol.y[1], label='Velocidade do Topo ($\omega_r$)', color='blue')
+plt.plot(sol.t, sol.y[3], label='Velocidade da Broca ($\omega_b$)', color='orange', linestyle='--')
+plt.axvline(x=1.0, color='gray', linestyle=':', label='Aplicação do Torque ($T_m$)')
+plt.xlabel('Tempo (s)')
+plt.ylabel('Velocidade Angular (rad/s)')
+plt.title('Resposta em Malha Aberta do Sistema Torsional (Entrada: Torque)')
+plt.legend()
+plt.grid(True)
+>>>>>>> 128df30 (.)
 plt.show()

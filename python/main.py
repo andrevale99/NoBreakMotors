@@ -2,6 +2,7 @@ import math
 from dataclasses import dataclass
 
 from params import get_args
+from graficos import plot_graficos
 from pi_controller import pi_controller_init, pi_controller_update
 from svpwm import svpwm_init, svpwm_modulate, svpwm_carrier, svpwm_gate_state
 from inverter import Inverter, inverter_output_voltage
@@ -10,10 +11,7 @@ from bldc import BLDCMotor, TimeSimulation, bldc_step, rpm_to_rads
 from progressbar import progress_bar_init, progress_bar_update, progress_bar_finish
 
 # ajustar conforme os limites reais do projeto original (nao enviados)
-PI_IQ_MIN, PI_IQ_MAX = -100.0, 100.0
-
-# ajustar conforme os limites reais do projeto original (nao enviados)
-PI_IQ_MIN, PI_IQ_MAX = -100.0, 100.0
+PI_IQ_MIN, PI_IQ_MAX = -50.0, 50.0
 
 def simulation_bldc_malha_corrente_velocidade(args):
     motor = BLDCMotor(
@@ -128,6 +126,10 @@ def simulation_bldc_malha_corrente_velocidade(args):
     progress_bar_finish(pb)
     log_file.close()
     print(f"\n\nSimulacao concluida. Resultados em \"{args.filename}\".\n")
+
+    print(f'\nPlot dos graficos de iabc, Te, idq, RPM e fft das correntes\n\n')
+    plot_graficos(args.filename)
+
     return 0
 
 
